@@ -61,7 +61,8 @@ public:
 unique_ptr<Monster> SummonMonster() //unique_ptr > 스마트 포인터, 메모리 자동관리
 {                    
 	int choice = rand % 4;                               //int choice = rand % 4 > 0~3중 랜덤 선택
-	switch (choice) {
+	switch (choice) 
+	{
 	 case 0: return make_unique<Goblin>();               //번호 할당
 	 case 1: return make_unique<Orc>();
 	 case 2: return make_unique<Troll>();
