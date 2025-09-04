@@ -124,9 +124,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="GameManager.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="GameManager.h" />
+    <ClCompile Include="TeamProJect Monster.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
