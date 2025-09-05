@@ -21,5 +21,8 @@
     <ClCompile Include="TeamProJect Monster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
