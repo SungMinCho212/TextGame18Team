@@ -16,10 +16,12 @@ public:
 		: Hp(Health + StageLevel * 10), AttackPower(AttackPower + StageLevel * 10), AttackSpeed(AttackSpeed + StageLevel * 0.1), CriticalHit(CriticalHit + StageLevel * 1), Items(DropItems) //플레이어 레벨에 비례해서 증가
 	{}
 
-	virtual void Attack() {
+	virtual void Attack() 
+	{
 		cout << "몬스터의 " << AttackPower << "의 공격!!!" << endl;
 	}
-	virtual void TakeDamge(int Damage) {
+	virtual void TakeDamge(int Damage) 
+	{
 		Hp -= Damage;
 		if (0 > Hp) Hp = 0;
 		cout << "몬스터가 " << Damage << "의 피해를 입었다!!! (남은 체력: " << Hp << ")" << endl; // 몬스터 맞고 피가 음수로 가지 않음
@@ -27,6 +29,7 @@ public:
 	bool isAlive() const {                    //몬스터 안죽으면 그대로 유지
 		return Hp > 0;
 	}
+
 };
 
 class Goblin : public Monster 
@@ -41,13 +44,21 @@ public:
 class Orc : public Monster 
 {
 public:
+<<<<<<< HEAD
 	Orc() : Monster(100, 10, 1, 1, {"오크 아이템1", "오크 아이템2"})
+=======
+	Orc() : Monster(100, 10, 1, 1, {"오크 아이템1", "오크 아이템2"}) 
+>>>>>>> main
 	{
 		cout << "오크 출현! 체력:100, 공격력:10" << endl;
 	}
 };
 
+<<<<<<< HEAD
 class Troll : public Monster
+=======
+class Troll : public Troll 
+>>>>>>> main
 {
 public:
 	Troll() : Monster(100, 10, 1, 1, { "트롤 아이템1", "트롤 아이템2" }) 
@@ -56,19 +67,28 @@ public:
 	}
 };
 
+<<<<<<< HEAD
 class Slime : public Monster
 {
 public:
 	Slime() : Monster(100, 10, 1, 1, { "슬라임 아이템1", "슬라임 아이템2" })
+=======
+class Slime : public Slime 
+{
+public:
+	Slime() : Monster(100, 10, 1, 1, { "슬라임 아이템1", "슬라임 아이템2" }) 
+>>>>>>> main
 	{
 		cout << "슬라임 출현! 체력:100, 공격력:10" << endl;
 	}
 };
 
 
-unique_ptr<Monster> SummonMonster() {                    //unique_ptr > 스마트 포인터, 메모리 자동관리
+unique_ptr<Monster> SummonMonster() 
+{                    //unique_ptr > 스마트 포인터, 메모리 자동관리
 	int choice = rand % 4;                               //int choice = rand % 4 > 0~3중 랜덤 선택
-	switch (choice) {
+	switch (choice)
+	{
 	 case 0: return make_unique<Goblin>();               //번호 할당
 	 case 1: return make_unique<Orc>();
 	 case 2: return make_unique<Troll>();
@@ -76,3 +96,5 @@ unique_ptr<Monster> SummonMonster() {                    //unique_ptr > 스마�
 	}
 	return nullptr;                                       //컴파일러 경고피하기 위한 장치 (지워도 무관)
 }
+
+
