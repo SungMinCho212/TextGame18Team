@@ -70,15 +70,17 @@ public:
 };
 
 
-unique_ptr<Monster> SummonMonster()                    //unique_ptr > 스마트 포인터, 메모리 자동관리
+std::unique_ptr<Monster> SummonMonster()            //참조:https://modoocode.com/304
 { 
-	int choice = rand % 4;                               //int choice = rand % 4 > 0~3중 랜덤 선택
-	switch (choice)
+	std::random_device rd;                          //randdom device 생성
+	std::mt19937 gen(rd());                         //난수 생성 엔진 초기화
+	std::uniform_int_distribution<int> dis(0, 3);   //0~3까지 균등하게 난수열 분포
+
+	switch (dis(gen))
 	{
-	 case 0: return make_unique<Goblin>();               //번호 할당
-	 case 1: return make_unique<Orc>();
-	 case 2: return make_unique<Troll>();
-	 case 3: return make_unique<Slime>();
+	case 0: return std::make_unique<Goblin>();
+	case 1: return std::make_unique<Orc>();
+	case 2: return std::make_unique<Troll>();
+	case 3: return std::make_unique<Slime>();
 	}
-	return nullptr;                                       //컴파일러 경고피하기 위한 장치 (지워도 무관)
 }
