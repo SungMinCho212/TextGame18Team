@@ -61,8 +61,10 @@ int Inventory::GetGold() const
      검색은 순차적으로 진행하며 HP 조건을 먼저 검사 → HP 포션 우선 사용.
      즉, HP와 MP가 동시에 낮더라도 HP포션을 먼저 사용한다.
      아이템 식별은 문자열("HP", "MP") 검색으로 수행됨.
+
       
 */
+
 void Inventory::AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp)
 {
     // HP가 절반 이하일 경우 HP포션 사용
@@ -104,6 +106,7 @@ void Inventory::AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp)
 
 /*
     PrintInventory:
+    PrintInventory: 
     현재 인벤토리 상태를 콘솔에 출력.
     아이템 이름과 개수, 그리고 보유 골드를 보여준다.
 */
