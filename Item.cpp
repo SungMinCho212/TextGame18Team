@@ -8,11 +8,17 @@ using namespace std;
     Inventory 클래스는 플레이어의 아이템(포션 등)과 골드를 관리한다.
     items: Item*을 저장하는 벡터. (동적 할당된 아이템의 소유권을 가진다)
     gold: 보유 골드
+	AddItem: 새로운 아이템을 인벤토리에 추가
+	AddGold: 골드 추가
+	GetGold: 현재 보유 골드 반환
+	AutoUsePotions: 현재 HP/MP가 최대치의 절반 이하일 경우 자동으로 포션을 사용, 포션은 한 번만 사용하고 함수는 종료(return)한다
+
+
     포션 자동 사용: HP/MP가 절반 이하일 때 해당 포션을 자동으로 사용
     소멸자에서 items에 저장된 Item*를 delete 하여 메모리 누수를 막는다.
     Inventory는 포인터의 소유권을 가진다. 즉, AddItem으로 넘긴 포인터는 외부에서 delete하면 안 된다.
     현재 설계는 복사 생성자/대입 연산자가 기본 제공되므로 얕은 복사 문제가 생길 수 있다.
-      → 복사 금지(delete) 처리하거나 스마트 포인터(std::unique_ptr)로 관리하는 것이 안전하다.
+    복사 금지(delete) 처리하거나 스마트 포인터(std::unique_ptr)로 관리하는 것이 안전하다.
 */
 
 Inventory::Inventory(void)
