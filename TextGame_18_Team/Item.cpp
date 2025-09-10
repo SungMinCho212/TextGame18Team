@@ -1,87 +1,157 @@
+ï»¿#include "Item2.h"
+#include "HPPotion.h"
+#include "MPPotion.h"
+#include "AssasinW.h"
 #include <iostream>
-#include <string>
 using namespace std;
 
-template <typename T>
-class Inventory {
-protected:
-    T* Items;        // ¾ÆÀÌÅÛ ¹è¿­
-    int capacity;    // °¡´ÉÇÑ ¾ÆÀÌÅÛ ¼ö
-    int size;        // ÇöÀç ¾ÆÀÌÅÛ ¼ö
-    int gold;        // ¼ÒÁö±İ
-
-public:
-	// Getter ¸Ş¼­µåµé
-    int GetSize() const { return size; } // ÇöÀç ¾ÆÀÌÅÛ ¼ö ¹İÈ¯
-    int GetCapacity() const { return capacity; } // ÃÖ´ë ¿ë·® ¹İÈ¯
-    int GetGold() const { return gold; } // ¼ÒÁö±İ ¹İÈ¯
+/*
+    Inventory í´ë˜ìŠ¤ëŠ” í”Œë ˆì´ì–´ì˜ ì•„ì´í…œ(í¬ì…˜ ë“±)ê³¼ ê³¨ë“œë¥¼ ê´€ë¦¬í•œë‹¤.
+    items: Item*ì„ ì €ì¥í•˜ëŠ” ë²¡í„°. (ë™ì  í• ë‹¹ëœ ì•„ì´í…œì˜ ì†Œìœ ê¶Œì„ ê°€ì§„ë‹¤)
+    gold: ë³´ìœ  ê³¨ë“œ
+	AddItem: ìƒˆë¡œìš´ ì•„ì´í…œì„ ì¸ë²¤í† ë¦¬ì— ì¶”ê°€
+	AddGold: ê³¨ë“œ ì¶”ê°€
+	GetGold: í˜„ì¬ ë³´ìœ  ê³¨ë“œ ë°˜í™˜
+	AutoUsePotions: í˜„ì¬ HP/MPê°€ ìµœëŒ€ì¹˜ì˜ ì ˆë°˜ ì´í•˜ì¼ ê²½ìš° ìë™ìœ¼ë¡œ í¬ì…˜ì„ ì‚¬ìš©, í¬ì…˜ì€ í•œ ë²ˆë§Œ ì‚¬ìš©í•˜ê³  í•¨ìˆ˜ëŠ” ì¢…ë£Œ(return)í•œë‹¤
 
 
-	// »ı¼ºÀÚ
-    Inventory(int cap = 0, int initGold = 0)
-        : capacity(cap <= 0 ? 1 : cap), size(0), gold(initGold) 
-        // ÂüÀÌ¸é 1, °ÅÁşÀÌ¸é cap (»ïÇ× ¿¬»êÀÚ), size´Â 0À¸·Î ÃÊ±âÈ­, gold´Â initGold·Î ÃÊ±âÈ­
+    í¬ì…˜ ìë™ ì‚¬ìš©: HP/MPê°€ ì ˆë°˜ ì´í•˜ì¼ ë•Œ í•´ë‹¹ í¬ì…˜ì„ ìë™ìœ¼ë¡œ ì‚¬ìš©
+    ì†Œë©¸ìì—ì„œ itemsì— ì €ì¥ëœ Item*ë¥¼ delete í•˜ì—¬ ë©”ëª¨ë¦¬ ëˆ„ìˆ˜ë¥¼ ë§‰ëŠ”ë‹¤.
+    InventoryëŠ” í¬ì¸í„°ì˜ ì†Œìœ ê¶Œì„ ê°€ì§„ë‹¤. ì¦‰, AddItemìœ¼ë¡œ ë„˜ê¸´ í¬ì¸í„°ëŠ” ì™¸ë¶€ì—ì„œ deleteí•˜ë©´ ì•ˆ ëœë‹¤.
+    í˜„ì¬ ì„¤ê³„ëŠ” ë³µì‚¬ ìƒì„±ì/ëŒ€ì… ì—°ì‚°ìê°€ ê¸°ë³¸ ì œê³µë˜ë¯€ë¡œ ì–•ì€ ë³µì‚¬ ë¬¸ì œê°€ ìƒê¸¸ ìˆ˜ ìˆë‹¤.
+    ë³µì‚¬ ê¸ˆì§€(delete) ì²˜ë¦¬í•˜ê±°ë‚˜ ìŠ¤ë§ˆíŠ¸ í¬ì¸í„°(std::unique_ptr)ë¡œ ê´€ë¦¬í•˜ëŠ” ê²ƒì´ ì•ˆì „í•˜ë‹¤.
+*/
+
+Inventory::Inventory(void)
+{
+    gold = 0; // ìƒì„± ì‹œ ê³¨ë“œëŠ” 0ìœ¼ë¡œ ì‹œì‘
+}
+
+Inventory::~Inventory(void)
+{
+    // ì†Œë©¸ì: ì•„ì´í…œ ë²¡í„°ì˜ ëª¨ë“  í¬ì¸í„°ë¥¼ delete
+    for (auto item : items)
     {
-        Items = new T[capacity]; // ¾ÆÀÌÅÛ ¹è¿­ µ¿Àû ÇÒ´ç
+        delete item; // Item ì†Œë©¸ì í˜¸ì¶œ â†’ ë™ì  ë©”ëª¨ë¦¬ í•´ì œ
     }
+    items.clear(); // ë²¡í„° ë¹„ìš°ê¸°
+}
 
+void Inventory::AddItem(Item* item)
+{
+    // ìƒˆë¡œìš´ ì•„ì´í…œì„ ì¸ë²¤í† ë¦¬ì— ì¶”ê°€
+    // ë„˜ê¸´ í¬ì¸í„°ëŠ” Inventoryê°€ ì†Œìœ ê¶Œì„ ê°€ì§„ë‹¤
+    items.push_back(item);
+}
 
-	// ¼Ò¸êÀÚ
-    ~Inventory() {
-        delete[] Items;  // µ¿Àû ÇÒ´ç ÇØÁ¦
-        Items = nullptr;
-    }
+void Inventory::AddGold(int amount)
+{
+    // ê³¨ë“œ ì¶”ê°€
+    gold += amount;
+}
 
-	// ¾ÆÀÌÅÛ Ãß°¡, ÀÎº¥Åä¸®°¡ ²Ë Ã¡À¸¸é ¸Ş½ÃÁö Ãâ·Â
-	void AddItem(const T& item) { // ÂüÁ¶·Î ¹Ş¾Æ¼­ º¹»ç ¹æÁö
-		if (size < capacity) { // ÀÎº¥Åä¸®¿¡ °ø°£ÀÌ ³²¾ÆÀÖÀ¸¸é
-			Items[size++] = item; // ¾ÆÀÌÅÛ Ãß°¡ ÈÄ size Áõ°¡
-        }
-        else {
-            cout << "ÀÎº¥Åä¸®°¡ ²Ë Ã¡½À´Ï´Ù." << endl;
-        }
-    }
+int Inventory::GetGold() const
+{
+    // í˜„ì¬ ë³´ìœ  ê³¨ë“œ ë°˜í™˜
+    return gold;
+}
+bool Inventory::SpendGold(int g)
+{ 
+    if (g < 0) return false; if (gold < g) return false; gold -= g; return true; 
+}
+/*
+     í˜„ì¬ HP/MPê°€ ìµœëŒ€ì¹˜ì˜ ì ˆë°˜ ì´í•˜ì¼ ê²½ìš° ìë™ìœ¼ë¡œ í¬ì…˜ì„ ì‚¬ìš©, í¬ì…˜ì€ í•œ ë²ˆë§Œ ì‚¬ìš©í•˜ê³  í•¨ìˆ˜ëŠ” ì¢…ë£Œ(return)í•œë‹¤
+     ì‚¬ìš© í›„ ì•„ì´í…œ ê°œìˆ˜ê°€ 0 ì´í•˜ë¼ë©´ delete + ë²¡í„°ì—ì„œ ì œê±°.
+     ê²€ìƒ‰ì€ ìˆœì°¨ì ìœ¼ë¡œ ì§„í–‰í•˜ë©° HP ì¡°ê±´ì„ ë¨¼ì € ê²€ì‚¬ â†’ HP í¬ì…˜ ìš°ì„  ì‚¬ìš©.
+     ì¦‰, HPì™€ MPê°€ ë™ì‹œì— ë‚®ë”ë¼ë„ HPí¬ì…˜ì„ ë¨¼ì € ì‚¬ìš©í•œë‹¤.
+     ì•„ì´í…œ ì‹ë³„ì€ ë¬¸ìì—´("HP", "MP") ê²€ìƒ‰ìœ¼ë¡œ ìˆ˜í–‰ë¨.
 
+      
+*/
 
-    // ¾ÆÀÌÅÛ Á¦°Å, ÀÎµ¦½º°¡ À¯È¿ÇÏÁö ¾ÊÀ¸¸é ¸Ş½ÃÁö Ãâ·Â
-    void Clear() { size = 0; }
-
-    void PrintItems() const {
-		if (size == 0) { // »çÀÌÁî°¡ 0ÀÌ¸é ºñ¾îÀÖÀ½ Ãâ·Â
-            cout << "ÀÎº¥Åä¸®°¡ ºñ¾ú½À´Ï´Ù." << endl;
-        }
-        else {
-			for (int i = 0; i < size; i++) { // ÇöÀç ¾ÆÀÌÅÛ ¼ö¸¸Å­ Ãâ·Â
-                cout << i + 1 << ". " << Items[i] << endl;
+void Inventory::AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp)
+{
+    // HPê°€ ì ˆë°˜ ì´í•˜ì¼ ê²½ìš° HPí¬ì…˜ ì‚¬ìš©
+    if (hp <= maxHp / 2)
+    {
+        for (size_t i = 0; i < items.size(); i++)
+        {
+            if (items[i]->GetName().find("HP") != string::npos)
+            {
+                items[i]->Use(hp, mp, maxHp, maxMp); // HP íšŒë³µ
+                if (items[i]->GetCount() <= 0)
+                {
+                    delete items[i];                 // ë©”ëª¨ë¦¬ í•´ì œ
+                    items.erase(items.begin() + i);  // ë²¡í„°ì—ì„œ ì œê±°
+                }
+                return; // HPí¬ì…˜ í•œ ë²ˆ ì‚¬ìš© í›„ ì¢…ë£Œ
             }
         }
     }
-};
 
-//class Potion {
-//private:
-//    vector<Potion> potions; // Æ÷¼Ç Á¾·ù¸¦ ´ãÀ» º¤ÅÍ
-//
-//public:
-//    void AddPotion(const Potion& potion) {
-//        potions.push_back(potion); // Æ÷¼Ç Ãß°¡
-//	}
-//
-//};
+    // MPê°€ ì ˆë°˜ ì´í•˜ì¼ ê²½ìš° MPí¬ì…˜ ì‚¬ìš©
+    if (mp <= maxMp / 2)
+    {
+        for (size_t i = 0; i < items.size(); i++)
+        {
+            if (items[i]->GetName().find("MP") != string::npos)
+            {
+                items[i]->Use(hp, mp, maxHp, maxMp); // MP íšŒë³µ
+                if (items[i]->GetCount() <= 0)
+                {
+                    delete items[i];                 // ë©”ëª¨ë¦¬ í•´ì œ
+                    items.erase(items.begin() + i);  // ë²¡í„°ì—ì„œ ì œê±°
+                }
+                return; // MPí¬ì…˜ í•œ ë²ˆ ì‚¬ìš© í›„ ì¢…ë£Œ
+            }
+        }
+    }
+}
 
-int main() {
-    Inventory<string> inv(10, 300); // ¿ë·® 10, ÃÊ±â ¼ÒÁö±İ 300
+/*
+    PrintInventory:
+    PrintInventory: 
+    í˜„ì¬ ì¸ë²¤í† ë¦¬ ìƒíƒœë¥¼ ì½˜ì†”ì— ì¶œë ¥.
+    ì•„ì´í…œ ì´ë¦„ê³¼ ê°œìˆ˜, ê·¸ë¦¬ê³  ë³´ìœ  ê³¨ë“œë¥¼ ë³´ì—¬ì¤€ë‹¤.
+*/
+void Inventory::PrintInventory(void) const
+{
+    cout << "=== ì¸ë²¤í† ë¦¬ ëª©ë¡ ===" << endl;
+    for (size_t i = 0; i < items.size(); i++)
+    {
+        cout << i + 1 << ". " << items[i]->GetName()
+            << " (" << items[i]->GetCount() << ")" << endl;
+    }
+    cout << "ê³¨ë“œ: " << gold << endl;
+}
 
-    inv.AddItem("HP Æ÷¼Ç");
-    inv.AddItem("MP Æ÷¼Ç");
-    inv.AddItem("°Ë");
-    inv.AddItem("¹æÆĞ");
-    
-	cout << "==ÀÎº¥Åä¸®==" << endl;
-	inv.PrintItems(); // Áö±İ±îÁö ÀÎº¥Åä¸®¿¡ µé¾î°£ ¾ÆÀÌÅÛ Ãâ·Â
+void Inventory::Clear() 
+{
+    for (auto* p : items) delete p;
+    items.clear();
+}
 
-    cout << "=====================" << endl;
-    cout << "ÃÖ´ë ¿ë·®: " << inv.GetCapacity() << endl;
-    cout << "ÇöÀç ¼ÒÁö±İ: " << inv.GetGold() << "G" << endl;
-    cout << "=====================" << endl;
+bool Inventory::UseByIndex(int idx, Character& ch) {
+    if (idx < 0 || idx >= (int)items.size()) return false;
+    Item* it = items[idx];
+    if (!it) return false;
+
+    // [CreatedByChatGPT] Characterì˜ HP/MPë¥¼ ë¡œì»¬ë¡œ êº¼ë‚´ì„œ Item::Useì— ì „ë‹¬
+    int hp = ch.getHP();
+    int mp = ch.getMP();        // (ì•„ë˜ Bì—ì„œ ì¶”ê°€í•  getter)
+    const int maxHp = ch.getMaxHP();
+    const int maxMp = ch.getMaxMP(); // (ì•„ë˜ Bì—ì„œ ì¶”ê°€í•  getter)
+
+    it->Use(hp, mp, maxHp, maxMp); // void ë°˜í™˜ì´ ì •ìƒ
+
+    // [CreatedByChatGPT] ë³€ê²½ëœ ê°’ ë°˜ì˜
+    ch.setHP(hp);
+    ch.setMP(mp);  // (ì•„ë˜ Bì—ì„œ ì¶”ê°€í•  setter)
+
+    // ê°œìˆ˜ 0 ì´í•˜ì´ë©´ ì œê±°
+    if (it->GetCount() <= 0) {
+        delete it;
+        items.erase(items.begin() + idx);
+    }
+    return true;
 }
