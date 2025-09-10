@@ -13,7 +13,8 @@ using namespace std;
 // ===== 직업 =====
 enum class Job { Warrior = 1, Mage, Assassin };
 
-struct Derived {
+struct Derived 
+{
     int ATK = 0;       // 공격력 = STR * 1.5
     int SPD = 0;       // 속도   = AGI % 10
     int CRITStat = 0;  // 치명타 = AGI * 2
@@ -21,14 +22,16 @@ struct Derived {
     int CritChance = 0; // 치명타 확률(%) = clamp(AGI*2 + 직업보너스, 0~100)
 };
 
-struct Base {
+struct Base 
+{
     int LV = 1, EXP = 0;
     int STR = 10, AGI = 10, INTL = 10; // 기본
     int HP = 100, MaxHP = 100;
     int MP = 0, MaxMP = 0;
 };
 
-class Character {
+class Character 
+{
 public:
     void chooseJob(Job j) {
         job = j;
@@ -40,16 +43,16 @@ public:
         // 마법사: 마나/지능↑
         // 암살자: 민첩↑, 치명타 확률 보너스
         switch (job) {
-        case Job::Warrior: // STR +40%, AGI +10%, INT -10%, MaxHP +30%
+        case Job::Warrior: // STR +40%, AGI +30%, INT -10%, MaxHP +30%
             applyPercent(base.STR, +40);
-            applyPercent(base.AGI, +10);
+            applyPercent(base.AGI, +30);
             applyPercent(base.INTL, -10);
             hpBonusPercent = 30;
             critBonusFlat = 0;
             break;
-        case Job::Mage:    // INT +50%, AGI +10%, STR -20%, MaxMP +30%
+        case Job::Mage:    // INT +50%, AGI +20%, STR -20%, MaxMP +30%
             applyPercent(base.STR, -20);
-            applyPercent(base.AGI, +10);
+            applyPercent(base.AGI, +20);
             applyPercent(base.INTL, +50);
             mpBonusPercent = 30;
             critBonusFlat = 0;
@@ -176,7 +179,23 @@ public:
         }
         return "무직";
     }
+    //추가 지점
+    int getSPD() const { return derived.SPD; }
+    int getATK() const { return derived.ATK; }
 
+    int getHP() const { return base.HP; }
+    int getMaxHP() const { return base.MaxHP; }
+    void setHP(int v) { base.HP = std::max(0, std::min(v, base.MaxHP)); }
+
+    void takeDamageFrom(int rawAtk, int myDef = 0) 
+    {
+        int real = std::max(1, rawAtk - myDef);
+        setHP(base.HP - real);
+    }
+
+    int  getMP() const { return base.MP; }
+    int  getMaxMP() const { return base.MaxMP; }
+    void setMP(int v) { base.MP = std::max(0, std::min(v, base.MaxMP)); }
 private:
     Job job = Job::Warrior;
     Base base;
@@ -187,14 +206,15 @@ private:
 
     static void applyPercent(int& s, int p) { s = max(1, s + s * p / 100); }
 
-    void levelUp() {
+    void levelUp() 
+    {
         base.LV++;
         cout << "== 레벨업! Lv." << base.LV << " ==\n";
         // 직업별 성장 맛 조금 다르게
         switch (job) {
         case Job::Warrior: base.STR += 3; base.AGI += 1; base.INTL += 1; break;
         case Job::Mage:    base.STR += 1; base.AGI += 1; base.INTL += 3; break;
-        case Job::Assassin:base.STR += 1; base.AGI += 3; base.INTL += 1; break;
+        case Job::Assassin:base.STR += 1; base.AGI += 2; base.INTL += 1; break;
         }
         recomputeDerived();
         base.MaxHP = 100 + base.STR * 10;
@@ -278,43 +298,3 @@ void printMenu() {
         << "번호를 선택해주세요: ";
 }
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    cout << "직업을 선택하세요:\n"
-        << "1. 전사 (HP↑, 힘↑)\n"
-        << "2. 마법사 (마나↑, 지능↑)\n"
-        << "3. 암살자 (민첩↑, 치명타 확률↑)\n"
-        << "번호: ";
-    int sel; cin >> sel;
-    if (sel < 1 || sel > 3) sel = 1;
-
-    Character player;
-    player.chooseJob(static_cast<Job>(sel));
-    player.printStatus();
-
-    int hpPot = 0, mpPot = 0; setPotion(5, &hpPot, &mpPot);
-    cout << "* 포션이 지급되었습니다. (HP, MP 포션 각 5개)\n";
-
-    while (true) {
-        printMenu();
-        int m; if (!(cin >> m)) break;
-        switch (m) {
-        case 0: player.printStatus(); break;
-        case 1: player.healHP(20, hpPot); break;
-        case 2: player.healMP(20, mpPot); break;
-        case 3: player.powerUpHP(); break;
-        case 4: player.powerUpMP(); break;
-        case 5: player.useSkill(); break;
-        case 6: player.useUltimate(); break;
-        case 7: player.gainExp(40); break;
-        case 8: player.trainRandom(); break;
-        case 9: cout << "프로그램을 종료합니다.\n"; return 0;
-        default: cout << "올바른 번호를 입력해주세요.\n";
-        }
-    }
-    return 0;
-
-    
-}
