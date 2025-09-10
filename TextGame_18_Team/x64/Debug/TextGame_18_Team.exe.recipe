@@ -2,7 +2,11 @@
 <Project>
   <ProjectOutputs>
     <ProjectOutput>
+<<<<<<< Updated upstream
       <FullPath>C:\Users\chosungmin\OneDrive\바탕 화면\TextGame_18_Team\x64\Debug\TextGame_18_Team.exe</FullPath>
+=======
+      <FullPath>C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\x64\Debug\TextGame_18_Team.exe</FullPath>
+>>>>>>> Stashed changes
     </ProjectOutput>
   </ProjectOutputs>
   <ContentFiles />
