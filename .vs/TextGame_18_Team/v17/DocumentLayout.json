@@ -32,7 +32,7 @@
               "RelativeDocumentMoniker": "TextGame_18_Team\\Item.cpp",
               "ToolTip": "D:\\TextGame18Team\\TextGame_18_Team\\Item.cpp",
               "RelativeToolTip": "TextGame_18_Team\\Item.cpp",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAAEsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAG8AAAAAAAAAAAAAADEAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2025-09-10T00:18:42.562Z",
               "EditorCaption": ""
@@ -47,8 +47,7 @@
               "RelativeToolTip": "TextGame_18_Team\\Character.cpp",
               "ViewState": "AgIAAK4AAAAAAAAAAAAAALIAAAALAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-10T00:16:38.152Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-10T00:16:38.152Z"
             },
             {
               "$type": "Document",
@@ -60,8 +59,7 @@
               "RelativeToolTip": "TextGame_18_Team\\TeamProJect Monster.cpp",
               "ViewState": "AgIAACEAAAAAAAAAAAAAACoAAABVAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-04T11:34:07.626Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-04T11:34:07.626Z"
             }
           ]
         }

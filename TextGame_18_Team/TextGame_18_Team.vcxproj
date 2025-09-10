@@ -125,8 +125,16 @@
   <ItemGroup>
     <ClCompile Include="Character.cpp" />
     <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="HPPotion.cpp" />
     <ClCompile Include="Item.cpp" />
+    <ClCompile Include="MPPotion.cpp" />
     <ClCompile Include="TeamProJect Monster.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="HPPotion.h" />
+    <ClInclude Include="Item2.h" />
+    <ClInclude Include="MPPotion.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
