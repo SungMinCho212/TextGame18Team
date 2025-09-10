@@ -3,24 +3,24 @@
   "WorkspaceRootPath": "D:\\TextGame18Team\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|solutionrelative:TextGame_18_Team\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\TeamProJect Monster.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|solutionrelative:TextGame_18_Team\\TeamProJect Monster.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|solutionrelative:TextGame_18_Team\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\Character.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|solutionrelative:TextGame_18_Team\\Character.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\TeamProJect Monster.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|solutionrelative:TextGame_18_Team\\TeamProJect Monster.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\Item.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
       "RelativeMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|solutionrelative:TextGame_18_Team\\Item.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|solutionrelative:TextGame_18_Team\\GameManager.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\Character.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|solutionrelative:TextGame_18_Team\\Character.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{AA0E3356-F514-4107-855B-3CCBC96E5E60}|TextGame_18_Team\\TextGame_18_Team.vcxproj|D:\\TextGame18Team\\TextGame_18_Team\\HPPotion.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
@@ -42,7 +42,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Document",
@@ -78,11 +78,12 @@
               "RelativeToolTip": "TextGame_18_Team\\main.cpp",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-10T01:38:52.038Z"
+              "WhenOpened": "2025-09-10T01:38:52.038Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "GameManager.cpp",
               "DocumentMoniker": "D:\\TextGame18Team\\TextGame_18_Team\\GameManager.cpp",
               "RelativeDocumentMoniker": "TextGame_18_Team\\GameManager.cpp",
@@ -107,19 +108,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Item.cpp",
               "DocumentMoniker": "D:\\TextGame18Team\\TextGame_18_Team\\Item.cpp",
               "RelativeDocumentMoniker": "TextGame_18_Team\\Item.cpp",
               "ToolTip": "D:\\TextGame18Team\\TextGame_18_Team\\Item.cpp",
               "RelativeToolTip": "TextGame_18_Team\\Item.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAEsAAAAAAAAAAAAAABgAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-10T00:18:42.562Z"
+              "WhenOpened": "2025-09-10T00:18:42.562Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "Character.cpp",
               "DocumentMoniker": "D:\\TextGame18Team\\TextGame_18_Team\\Character.cpp",
               "RelativeDocumentMoniker": "TextGame_18_Team\\Character.cpp",
@@ -131,15 +133,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "TeamProJect Monster.cpp",
               "DocumentMoniker": "D:\\TextGame18Team\\TextGame_18_Team\\TeamProJect Monster.cpp",
               "RelativeDocumentMoniker": "TextGame_18_Team\\TeamProJect Monster.cpp",
               "ToolTip": "D:\\TextGame18Team\\TextGame_18_Team\\TeamProJect Monster.cpp",
               "RelativeToolTip": "TextGame_18_Team\\TeamProJect Monster.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIkAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAACcAAAAAAAAAAAAAAEwAAABXAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2025-09-04T11:34:07.626Z"
+              "WhenOpened": "2025-09-04T11:34:07.626Z",
+              "EditorCaption": ""
             }
           ]
         }

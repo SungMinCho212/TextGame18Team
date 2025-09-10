@@ -111,7 +111,8 @@ public:
 
 // 일반 몬스터 랜덤 소환
 std::unique_ptr<Monster> SummonMonster() {
-    std::random_device rd; std::mt19937 gen(rd());
+    std::random_device rd; 
+    std::mt19937 gen(rd());
     std::uniform_int_distribution<int> dis(0, 3);
     switch (dis(gen)) {
     case 0: return std::make_unique<Goblin>();
