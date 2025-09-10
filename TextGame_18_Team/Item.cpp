@@ -69,7 +69,7 @@ bool Inventory::SpendGold(int g)
       
 */
 
-void Inventory::AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp)
+void Inventory::AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp, int& AGI)
 {
     // HP가 절반 이하일 경우 HP포션 사용
     if (hp <= maxHp / 2)
@@ -78,7 +78,7 @@ void Inventory::AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp)
         {
             if (items[i]->GetName().find("HP") != string::npos)
             {
-                items[i]->Use(hp, mp, maxHp, maxMp); // HP 회복
+                items[i]->Use(hp, mp, maxHp, maxMp, AGI); // HP 회복
                 if (items[i]->GetCount() <= 0)
                 {
                     delete items[i];                 // 메모리 해제
@@ -96,7 +96,7 @@ void Inventory::AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp)
         {
             if (items[i]->GetName().find("MP") != string::npos)
             {
-                items[i]->Use(hp, mp, maxHp, maxMp); // MP 회복
+                items[i]->Use(hp, mp, maxHp, maxMp, AGI); // MP 회복
                 if (items[i]->GetCount() <= 0)
                 {
                     delete items[i];                 // 메모리 해제
@@ -141,12 +141,14 @@ bool Inventory::UseByIndex(int idx, Character& ch) {
     int mp = ch.getMP();        // (아래 B에서 추가할 getter)
     const int maxHp = ch.getMaxHP();
     const int maxMp = ch.getMaxMP(); // (아래 B에서 추가할 getter)
+    int AGI = ch.getAGI();
 
-    it->Use(hp, mp, maxHp, maxMp); // void 반환이 정상
+    it->Use(hp, mp, maxHp, maxMp, AGI); // void 반환이 정상
 
     // [CreatedByChatGPT] 변경된 값 반영
     ch.setHP(hp);
-    ch.setMP(mp);  // (아래 B에서 추가할 setter)
+    ch.setMP(mp);// (아래 B에서 추가할 setter)
+    ch.setAGI(AGI);
 
     // 개수 0 이하이면 제거
     if (it->GetCount() <= 0) {

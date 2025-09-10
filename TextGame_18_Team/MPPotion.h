@@ -12,7 +12,7 @@ public:
 
     string GetName() const override;
 
-    void Use(int& hp, int& mp, int maxHp, int maxMp) override;
+    void Use(int& hp, int& mp, int maxHp, int maxMp, int& AGI) override;
 
     int GetCount() const override;
 };

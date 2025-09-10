@@ -115,11 +115,11 @@ public:
         cout << "* MP +" << amount << " (남은 MP포션: " << mpPotion << ")  "
             << base.MP << "/" << base.MaxMP << "\n";
     }
-    void powerUpHP() { // MaxHP 2배, 현재 HP 비율 유지
-        int oldMax = base.MaxHP;
-        base.MaxHP *= 2;
-        base.HP = base.HP * base.MaxHP / oldMax;
-        cout << "* HP가 2배가 되었습니다: " << base.HP << "/" << base.MaxHP << "\n";
+    void powerUpAGI(int bAGI, int& AssasinW) {
+        if (AssasinW <= 0) { cout << "무기가 없습니다.\n"; return; }
+        AssasinW--;
+        base.AGI = base.AGI + bAGI;
+        cout << "*AGI + " << bAGI << "\n";
     }
     void powerUpMP() {
         int oldMax = base.MaxMP;
@@ -186,6 +186,9 @@ public:
     int getHP() const { return base.HP; }
     int getMaxHP() const { return base.MaxHP; }
     void setHP(int v) { base.HP = std::max(0, std::min(v, base.MaxHP)); }
+
+    int getAGI() const { return base.AGI; }
+    void setAGI(int v) { base.AGI = v; }
 
     void takeDamageFrom(int rawAtk, int myDef = 0) 
     {

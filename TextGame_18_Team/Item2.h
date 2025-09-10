@@ -11,20 +11,11 @@ class Item
 public:
     virtual ~Item() {}
 
-    //무기 이름 반환
-    virtual string GetWname() const = 0;
-
-    //무기 사용
-    virtual void UseW(int& AGL) = 0;
-    
-    //개수
-    virtual int GetWCount() const = 0;
-
     // 아이템 이름 반환
     virtual string GetName() const = 0;
 
     // 아이템 사용 (나중에 Character& player로 교체 가능)
-    virtual void Use(int& hp, int& mp, int maxHp, int maxMp) = 0;
+    virtual void Use(int& hp, int& mp, int maxHp, int maxMp, int& AGI) = 0;
 
     // 포션 갯수 반환
     virtual int GetCount() const = 0;
@@ -52,7 +43,7 @@ public:
     int GetGold() const;
 
     // HP/MP 50% 이하 자동 사용
-    void AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp);
+    void AutoUsePotions(int& hp, int& mp, int maxHp, int maxMp, int& AGI);
 
     // 인벤토리 상태 출력 (포션 이름 + 개수, 골드)
     void PrintInventory(void) const;

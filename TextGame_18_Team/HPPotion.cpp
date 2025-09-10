@@ -22,7 +22,7 @@ string HPPotion::GetName() const
     return "HP 포션";
 }
 
-void HPPotion::Use(int& hp, int& mp, int maxHp, int maxMp)
+void HPPotion::Use(int& hp, int& mp, int maxHp, int maxMp, int& AGI)
 {
     // count가 0 이하이면 사용 불가
     if (count <= 0)

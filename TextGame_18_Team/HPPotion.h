@@ -21,7 +21,7 @@ public:
 
     // 포션 사용 함수
     // hp, mp, maxHp, maxMp를 참조로 받아서 실제 HP를 회복시키는 역할
-    void Use(int& hp, int& mp, int maxHp, int maxMp) override;
+    void Use(int& hp, int& mp, int maxHp, int maxMp, int& AGI) override;
 
     // 남은 포션 개수 반환
     int GetCount() const override;

@@ -22,7 +22,7 @@ string MPPotion::GetName() const
     return "MP 포션";
 }
 
-void MPPotion::Use(int& hp, int& mp, int maxHp, int maxMp)
+void MPPotion::Use(int& hp, int& mp, int maxHp, int maxMp, int& AGI)
 {
     // 개수가 0 이하면 사용 불가
     if (count <= 0)
