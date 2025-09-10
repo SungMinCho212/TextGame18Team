@@ -13,7 +13,7 @@ protected:                                                //외부 수정 X
 	vector<string> Items;                                 //드랍 아이템
 public:
 	Monster(int Health, int AttackPower, int AttackSpeed, int CriticalHit, vector<string> DropItems)  //몬스터 생성 시 체력 값을 바로 Hp멤버에 넣음. 상속 클래스에서 자동 호출 방지.   {}은 생성자 본문. 비어있는 이유: 멤버 초기화 리스트에서 Hp를 초기화 했기 때문에 작업 필요X
-		: Hp(Health + PlayerLevel * 10), AttackPower(AttackPower + PlayerLevel * 10), AttackSpeed(AttackSpeed + PlayerLevel * 0.1), CriticalHit(CriticalHit + PlayerLevel * 1), Items(DropItems) //플레이어 레벨에 비례해서 증가
+		: Hp(Health + StageLevel * 10), AttackPower(AttackPower + StageLevel * 10), AttackSpeed(AttackSpeed + StageLevel * 0.1), CriticalHit(CriticalHit + StageLevel * 1), Items(DropItems) //플레이어 레벨에 비례해서 증가
 	{}
 
 	virtual void Attack() 
@@ -46,13 +46,21 @@ public:
 class Orc : public Monster 
 {
 public:
+<<<<<<< HEAD
+	Orc() : Monster(100, 10, 1, 1, {"오크 아이템1", "오크 아이템2"})
+=======
 	Orc() : Monster(100, 10, 1, 1, {"오크 아이템1", "오크 아이템2"}) 
+>>>>>>> main
 	{
 		cout << "오크 출현! 체력:100, 공격력:10" << endl;
 	}
 };
 
+<<<<<<< HEAD
+class Troll : public Monster
+=======
 class Troll : public Troll 
+>>>>>>> main
 {
 public:
 	Troll() : Monster(100, 10, 1, 1, { "트롤 아이템1", "트롤 아이템2" }) 
@@ -61,10 +69,17 @@ public:
 	}
 };
 
+<<<<<<< HEAD
+class Slime : public Monster
+{
+public:
+	Slime() : Monster(100, 10, 1, 1, { "슬라임 아이템1", "슬라임 아이템2" })
+=======
 class Slime : public Slime 
 {
 public:
 	Slime() : Monster(100, 10, 1, 1, { "슬라임 아이템1", "슬라임 아이템2" }) 
+>>>>>>> main
 	{
 		cout << "슬라임 출현! 체력:100, 공격력:10" << endl;
 	}
