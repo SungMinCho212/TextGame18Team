@@ -176,7 +176,19 @@ public:
         }
         return "무직";
     }
+    //추가 지점
+    int getSPD() const { return derived.SPD; }
+    int getATK() const { return derived.ATK; }
 
+    int getHP() const { return base.HP; }
+    int getMaxHP() const { return base.MaxHP; }
+    void setHP(int v) { base.HP = std::max(0, std::min(v, base.MaxHP)); }
+
+    void takeDamageFrom(int rawAtk, int myDef = 0) 
+    {
+        int real = std::max(1, rawAtk - myDef);
+        setHP(base.HP - real);
+    }
 private:
     Job job = Job::Warrior;
     Base base;
@@ -278,43 +290,3 @@ void printMenu() {
         << "번호를 선택해주세요: ";
 }
 
-int main() {
-    ios::sync_with_stdio(false);
-    cin.tie(nullptr);
-
-    cout << "직업을 선택하세요:\n"
-        << "1. 전사 (HP↑, 힘↑)\n"
-        << "2. 마법사 (마나↑, 지능↑)\n"
-        << "3. 암살자 (민첩↑, 치명타 확률↑)\n"
-        << "번호: ";
-    int sel; cin >> sel;
-    if (sel < 1 || sel > 3) sel = 1;
-
-    Character player;
-    player.chooseJob(static_cast<Job>(sel));
-    player.printStatus();
-
-    int hpPot = 0, mpPot = 0; setPotion(5, &hpPot, &mpPot);
-    cout << "* 포션이 지급되었습니다. (HP, MP 포션 각 5개)\n";
-
-    while (true) {
-        printMenu();
-        int m; if (!(cin >> m)) break;
-        switch (m) {
-        case 0: player.printStatus(); break;
-        case 1: player.healHP(20, hpPot); break;
-        case 2: player.healMP(20, mpPot); break;
-        case 3: player.powerUpHP(); break;
-        case 4: player.powerUpMP(); break;
-        case 5: player.useSkill(); break;
-        case 6: player.useUltimate(); break;
-        case 7: player.gainExp(40); break;
-        case 8: player.trainRandom(); break;
-        case 9: cout << "프로그램을 종료합니다.\n"; return 0;
-        default: cout << "올바른 번호를 입력해주세요.\n";
-        }
-    }
-    return 0;
-
-    
-}

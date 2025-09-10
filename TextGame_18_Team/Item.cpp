@@ -56,6 +56,10 @@ public:
             }
         }
     }
+    
+    //추가 지점
+    void AddGold(int g) { gold += g; if (gold < 0) gold = 0; }
+    bool SpendGold(int g) { if (g < 0) return false; if (gold < g) return false; gold -= g; return true; }
 };
 
 //class Potion {

@@ -30,6 +30,8 @@ public:
 		return Hp > 0;
 	}
 
+
+
 };
 
 class Goblin : public Monster 
