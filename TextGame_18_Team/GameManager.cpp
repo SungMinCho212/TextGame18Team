@@ -28,7 +28,8 @@ static inline void ClearScreen()
 }
 
 //타자기 효과
-static inline void Typewrite(const std::string& s, int per_char_ms = 12) {
+static inline void Typewrite(const std::string& s, int per_char_ms = 12) 
+{
     for (char c : s) {
         std::cout << c << std::flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(per_char_ms));
@@ -44,7 +45,8 @@ static inline void TypewriteLines(const std::vector<std::string>& lines,
 }
 
 //엔터 기다리기
-static inline void WaitEnter(const std::string& prompt = "계속하려면 Enter 키를 누르세요...") {
+static inline void WaitEnter(const std::string& prompt = "계속하려면 Enter 키를 누르세요...") 
+{
     std::cout << '\n' << prompt << std::flush;
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -58,7 +60,8 @@ static inline void LogClear() { g_log.clear(); }
 static inline void LogPush(const std::string& s) { g_log.push_back(s); }
 
 //HUD
-static void PrintHUD(const Character& ch, const Monster* m, const Inventory& inv, int stageLevel) {
+static void PrintHUD(const Character& ch, const Monster* m, const Inventory& inv, int stageLevel) 
+{
     cout << "----------------------------------------\n";
     cout << "[Stage " << stageLevel << "]\n";
     cout << "[PLAYER] HP " << ch.getHP() << "/" << ch.getMaxHP()
@@ -90,7 +93,8 @@ static inline void ShowFrame(const Character& ch, const Monster* m, const Invent
 //전투 결과
 static inline void ShowResultScreen(const Character& ch, const Inventory& inv, int stageLevel,
     const std::vector<std::string>& resultLines,
-    int per_char_ms = 12, int per_line_ms = 60) {
+    int per_char_ms = 12, int per_line_ms = 60) 
+{
     ClearScreen();
     cout << "=========== 전투 결과 ===========" << '\n';
     TypewriteLines(resultLines, per_char_ms, per_line_ms);
@@ -121,11 +125,13 @@ void GameManager::Run() {
     ShowStatus();
 
     // 3~7 반복
-    while (true) {
+    while (true) 
+    {
         // 3) 전투: 5,10,15… 스테이지는 보스
         bool bossFight = (stageLevel >= 5) && (stageLevel % 5 == 0);
         bool alive = BattleOnce(bossFight);
-        if (!alive) {
+        if (!alive) 
+        {
             std::vector<std::string> endLines = { "플레이어가 쓰러졌습니다. 게임 종료." };
             ShowResultScreen(g_player, g_inv, stageLevel, endLines);
             break;
@@ -137,6 +143,7 @@ void GameManager::Run() {
         // 6) 상태
         ShowStatus();
         // 7) 다음 전투로 자동 반복
+
     }
 }
 
@@ -261,7 +268,7 @@ bool GameManager::BattleOnce(bool bossFight)
 
         if (playerFirst) 
         {
-            if (!playerAct()) return true;       // 도주
+            if (!playerAct()) return true;// 도주
             if (mon->IsDead()) break;
             monsterAct();
         }
@@ -277,7 +284,7 @@ bool GameManager::BattleOnce(bool bossFight)
 
     // 승리 보상
     int gold = bossFight ? (100 + stageLevel * 5) : (12 + stageLevel * 2);
-    int exp = bossFight ? (60 + stageLevel * 5) : (20 + stageLevel * 2);
+    int exp = bossFight ? (60 + stageLevel * 5) : (50 + stageLevel * 2);
     g_inv.AddGold(gold);
     g_player.gainExp(exp);
     g_player.recomputeDerived();
