@@ -1,102 +1,125 @@
 ﻿#include <iostream>
+#include <string>
 #include <vector>
 #include <random>
-#include <string>
+#include <memory> 
+#include <algorithm>
+
 using namespace std;
 
-class Monster {                                           //추상 클래스 참조:https://musket-ade.tistory.com/entry/C-%EA%B0%80%EC%83%81-%ED%95%A8%EC%88%98-virtual-Function-%EC%88%9C%EC%88%98-%EA%B0%80%EC%83%81%ED%95%A8%EC%88%98-Pure-Virtual-Function-%EC%B6%94%EC%83%81-%ED%81%B4%EB%9E%98%EC%8A%A4-Abstract-Class
-protected:                                                //외부 수정 X
-	int Hp;                                               //체력
-	int AttackPower;                                      //공격력
-	int AttackSpeed;                                      //공격 속도
-	int CriticalHit;                                      //치명타
-	vector<string> Items;                                 //드랍 아이템
+class Monster 
+{
+protected:
+    int Hp;
+    int AttackPower;
+    int AttackSpeed;   
+    int CriticalHit;   
+    vector<string> Items;
+
 public:
-	Monster(int Health, int AttackPower, int AttackSpeed, int CriticalHit, vector<string> DropItems)  //몬스터 생성 시 체력 값을 바로 Hp멤버에 넣음. 상속 클래스에서 자동 호출 방지.   {}은 생성자 본문. 비어있는 이유: 멤버 초기화 리스트에서 Hp를 초기화 했기 때문에 작업 필요X
-		: Hp(Health + StageLevel * 10), AttackPower(AttackPower + StageLevel * 10), AttackSpeed(AttackSpeed + StageLevel * 0.1), CriticalHit(CriticalHit + StageLevel * 1), Items(DropItems) //플레이어 레벨에 비례해서 증가
-	{}
+    Monster(int Health, int AttackPower, int AttackSpeed, int CriticalHit, vector<string> DropItems)
+        : Hp(Health), AttackPower(AttackPower), AttackSpeed(AttackSpeed), CriticalHit(CriticalHit), Items(DropItems) 
+    {}
 
-	virtual void Attack() 
-	{
-		cout << "몬스터의 " << AttackPower << "의 공격!!!" << endl;
-	}
-	virtual void TakeDamge(int Damage) 
-	{
-		Hp -= Damage;
-		if (0 > Hp) Hp = 0;
-		cout << "몬스터가 " << Damage << "의 피해를 입었다!!! (남은 체력: " << Hp << ")" << endl; // 몬스터 맞고 피가 음수로 가지 않음
-	}
-	bool isAlive() const {                    //몬스터 안죽으면 그대로 유지
-		return Hp > 0;
-	}
+    virtual ~Monster() = default; 
 
+    // 게터
+    int GetHP() const { return Hp; }
+    int GetAttackPower() const { return AttackPower; }
+    int GetAttackSpeed() const { return AttackSpeed; }
+    int GetCriticalHit() const { return CriticalHit; }
+    const vector<string>& itemsRef() const { return Items; } 
 
+    // 전투 유틸
+    bool IsDead() const { return Hp <= 0; }
 
+    void ApplyDamage(int raw) {
+        int real = std::max(1, raw); 
+        Hp = std::max(0, Hp - real);
+    }
+
+    int RollDamage() const 
+    {
+        int chance = (CriticalHit < 0) ? 0 : (CriticalHit > 100 ? 100 : CriticalHit);
+
+        static std::mt19937 rng{ std::random_device{}() };
+
+        std::uniform_int_distribution<int> d(1, 100);
+
+        bool crit = d(rng) <= chance;
+
+        return crit ? (AttackPower * 2) : AttackPower;
+    }
+
+    void ApplyStageLevel(int stageLevel) 
+    {
+        Hp += stageLevel * 10;
+        AttackPower += stageLevel * 3;
+        AttackSpeed += stageLevel / 3; 
+        CriticalHit = std::min(100, CriticalHit + stageLevel);
+    }
 };
+
 
 class Goblin : public Monster 
 {
 public:
-	Goblin() : Monster(100, 10, 1, 1, { "고블린 아이템1", "고블린 아이템2" }) 
-	{
-		cout << "고블린 출현! 체력:100, 공격력:10" << endl;
-	}                                                                           // {}은 생성자 본문. 추가로 실행할 코드가 있다면 여기에 작성.
+    Goblin() : Monster(55, 10, 4, 5, { "거친가죽", "짧은단검" }) {}
 };
 
 class Orc : public Monster 
 {
 public:
-<<<<<<< HEAD
-	Orc() : Monster(100, 10, 1, 1, {"오크 아이템1", "오크 아이템2"})
-=======
-	Orc() : Monster(100, 10, 1, 1, {"오크 아이템1", "오크 아이템2"}) 
->>>>>>> main
-	{
-		cout << "오크 출현! 체력:100, 공격력:10" << endl;
-	}
+    Orc() : Monster(75, 13, 5, 7, { "오크뼈", "부러진철퇴" }) {}
 };
 
-<<<<<<< HEAD
-class Troll : public Monster
-=======
-class Troll : public Troll 
->>>>>>> main
+class Troll : public Monster 
 {
 public:
-	Troll() : Monster(100, 10, 1, 1, { "트롤 아이템1", "트롤 아이템2" }) 
-	{
-		cout << "트롤 출현! 체력:100, 공격력:10" << endl;
-	}
+    Troll() : Monster(95, 15, 6, 8, { "트롤피", "무딘클럽" }) {}
 };
 
-<<<<<<< HEAD
 class Slime : public Monster
 {
 public:
-	Slime() : Monster(100, 10, 1, 1, { "슬라임 아이템1", "슬라임 아이템2" })
-=======
-class Slime : public Slime 
-{
-public:
-	Slime() : Monster(100, 10, 1, 1, { "슬라임 아이템1", "슬라임 아이템2" }) 
->>>>>>> main
-	{
-		cout << "슬라임 출현! 체력:100, 공격력:10" << endl;
-	}
+    Slime() : Monster(35, 7, 3, 3, { "젤리조각" }) {}
 };
 
 
-unique_ptr<Monster> SummonMonster() 
-{                    //unique_ptr > 스마트 포인터, 메모리 자동관리
-	int choice = rand % 4;                               //int choice = rand % 4 > 0~3중 랜덤 선택
-	switch (choice)
-	{
-	 case 0: return make_unique<Goblin>();               //번호 할당
-	 case 1: return make_unique<Orc>();
-	 case 2: return make_unique<Troll>();
-	 case 3: return make_unique<Slime>();
-	}
-	return nullptr;                                       //컴파일러 경고피하기 위한 장치 (지워도 무관)
+class BossDragon : public Monster 
+{
+public:
+    BossDragon() : Monster(160, 18, 7, 12, { "용비늘", "용의심장" }) {}
+    
+};
+
+
+std::unique_ptr<Monster> SummonMonster() 
+{
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> dis(0, 3);
+    switch (dis(gen)) {
+    case 0: return std::make_unique<Goblin>();
+    case 1: return std::make_unique<Orc>();
+    case 2: return std::make_unique<Troll>();
+    case 3: return std::make_unique<Slime>();
+    }
+    return std::make_unique<Slime>();
 }
 
 
+std::unique_ptr<Monster> SummonMonster(int stageLevel) 
+{
+    auto m = SummonMonster();
+    if (m) m->ApplyStageLevel(stageLevel);
+    return m;
+}
+
+
+std::unique_ptr<Monster> SummonBoss(int stageLevel) 
+{
+    auto b = std::make_unique<BossDragon>();
+    b->ApplyStageLevel(stageLevel);
+    return b;
+}

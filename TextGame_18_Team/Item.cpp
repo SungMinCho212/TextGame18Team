@@ -73,19 +73,3 @@ public:
 //
 //};
 
-int main() {
-    Inventory<string> inv(10, 300); // 용량 10, 초기 소지금 300
-
-    inv.AddItem("HP 포션");
-    inv.AddItem("MP 포션");
-    inv.AddItem("검");
-    inv.AddItem("방패");
-    
-	cout << "==인벤토리==" << endl;
-	inv.PrintItems(); // 지금까지 인벤토리에 들어간 아이템 출력
-
-    cout << "=====================" << endl;
-    cout << "최대 용량: " << inv.GetCapacity() << endl;
-    cout << "현재 소지금: " << inv.GetGold() << "G" << endl;
-    cout << "=====================" << endl;
-}
