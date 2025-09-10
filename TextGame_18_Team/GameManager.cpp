@@ -28,23 +28,28 @@ static inline void ClearScreen()
 }
 
 //타자기 효과
-static inline void Typewrite(const std::string& s, int per_char_ms = 12) {
-    for (char c : s) {
+static inline void Typewrite(const std::string& s, int per_char_ms = 12) 
+{
+    for (char c : s) 
+    {
         std::cout << c << std::flush;
         std::this_thread::sleep_for(std::chrono::milliseconds(per_char_ms));
     }
     std::cout << '\n';
 }
 static inline void TypewriteLines(const std::vector<std::string>& lines,
-    int per_char_ms = 12, int per_line_ms = 60) {
-    for (const auto& l : lines) {
+    int per_char_ms = 12, int per_line_ms = 60) 
+{
+    for (const auto& l : lines) 
+    {
         Typewrite(l, per_char_ms);
         std::this_thread::sleep_for(std::chrono::milliseconds(per_line_ms));
     }
 }
 
 //엔터 기다리기
-static inline void WaitEnter(const std::string& prompt = "계속하려면 Enter 키를 누르세요...") {
+static inline void WaitEnter(const std::string& prompt = "계속하려면 Enter 키를 누르세요...") 
+{
     std::cout << '\n' << prompt << std::flush;
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -58,13 +63,15 @@ static inline void LogClear() { g_log.clear(); }
 static inline void LogPush(const std::string& s) { g_log.push_back(s); }
 
 //HUD
-static void PrintHUD(const Character& ch, const Monster* m, const Inventory& inv, int stageLevel) {
+static void PrintHUD(const Character& ch, const Monster* m, const Inventory& inv, int stageLevel) 
+{
     cout << "----------------------------------------\n";
     cout << "[Stage " << stageLevel << "]\n";
     cout << "[PLAYER] HP " << ch.getHP() << "/" << ch.getMaxHP()
         << "  ATK " << ch.getATK()
         << "  SPD " << ch.getSPD() << "\n";
-    if (m) {
+    if (m) 
+    {
         cout << "[MONSTER: " << m->GetName() << "] "
             << "HP " << m->GetHP()
             << "  ATK " << m->GetAttackPower()
@@ -76,10 +83,13 @@ static void PrintHUD(const Character& ch, const Monster* m, const Inventory& inv
 
 
 static inline void ShowFrame(const Character& ch, const Monster* m, const Inventory& inv,
-    int stageLevel, int per_char_ms = 12, int per_line_ms = 60) {
+    int stageLevel, int per_char_ms = 12, int per_line_ms = 60)
+{
     ClearScreen();
     PrintHUD(ch, m, inv, stageLevel);
-    if (!g_log.empty()) {
+
+    if (!g_log.empty())
+    {
         cout << "-------------- LOG --------------\n";
         TypewriteLines(g_log, per_char_ms, per_line_ms);
         cout << "---------------------------------\n";
@@ -90,19 +100,27 @@ static inline void ShowFrame(const Character& ch, const Monster* m, const Invent
 //전투 결과
 static inline void ShowResultScreen(const Character& ch, const Inventory& inv, int stageLevel,
     const std::vector<std::string>& resultLines,
-    int per_char_ms = 12, int per_line_ms = 60) {
+    int per_char_ms = 12, int per_line_ms = 60) 
+{
     ClearScreen();
     cout << "=========== 전투 결과 ===========" << '\n';
+
     TypewriteLines(resultLines, per_char_ms, per_line_ms);
+
     cout << "---------------------------------" << '\n';
+
     cout << "[현재 상태]\n";
+
     PrintHUD(ch, nullptr, inv, stageLevel);
+
     ch.printStatus();
+
     WaitEnter();
 }
 
 
 static std::mt19937& RNG() { static std::mt19937 r{ std::random_device{}() }; return r; }
+
 int GameManager::RandInt(int a, int b) const { std::uniform_int_distribution<int> d(a, b); return d(RNG()); }
 
 
@@ -110,7 +128,8 @@ static Character g_player;
 static Inventory g_inv; 
 
 // 메인 루프
-void GameManager::Run() {
+void GameManager::Run() 
+{
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
 
@@ -121,11 +140,13 @@ void GameManager::Run() {
     ShowStatus();
 
     // 3~7 반복
-    while (true) {
+    while (true) 
+    {
         // 3) 전투: 5,10,15… 스테이지는 보스
         bool bossFight = (stageLevel >= 5) && (stageLevel % 5 == 0);
         bool alive = BattleOnce(bossFight);
-        if (!alive) {
+        if (!alive) 
+        {
             std::vector<std::string> endLines = { "플레이어가 쓰러졌습니다. 게임 종료." };
             ShowResultScreen(g_player, g_inv, stageLevel, endLines);
             break;
@@ -198,7 +219,8 @@ bool GameManager::BattleOnce(bool bossFight)
             playerFirst = true;
             LogPush(std::string("선공: 플레이어 (") + std::to_string(pSPD) + " > " + std::to_string(mSPD) + ")");
         }
-        else {
+        else 
+        {
             playerFirst = false;
             LogPush(std::string("선공: [") + mon->GetName() + "] (" + std::to_string(mSPD) + " > " + std::to_string(pSPD) + ")");
         }
@@ -277,13 +299,16 @@ bool GameManager::BattleOnce(bool bossFight)
 
     // 승리 보상
     int gold = bossFight ? (100 + stageLevel * 5) : (12 + stageLevel * 2);
+
     int exp = bossFight ? (60 + stageLevel * 5) : (20 + stageLevel * 2);
+
     g_inv.AddGold(gold);
     g_player.gainExp(exp);
     g_player.recomputeDerived();
 
     // 결과/보상/드랍 로그 구성
     LogPush("전투 승리! Gold +" + std::to_string(gold) + ", EXP +" + std::to_string(exp));
+
     auto drops = mon->TakeDrops();
     if (!drops.empty()) 
     {
@@ -326,11 +351,23 @@ void GameManager::VisitShop()
         if (c == 0) break;
 
         Item* toBuy = nullptr;
-        int price = 0;
-        if (c == 1) { toBuy = new HPPotion(1); price = 10; }
-        else if (c == 2) { toBuy = new MPPotion(1); price = 12; }
 
-        if (!toBuy) { LogPush("해당 품목이 없습니다."); continue; }
+        int price = 0;
+
+        if (c == 1) 
+        { 
+            toBuy = new HPPotion(1); price = 10; 
+        }
+
+        else if (c == 2) 
+        { 
+            toBuy = new MPPotion(1); price = 12;
+        }
+
+        if (!toBuy)
+        { 
+            LogPush("해당 품목이 없습니다."); continue; 
+        }
 
         if (g_inv.SpendGold(price)) 
         {

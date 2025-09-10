@@ -1,25 +1,4 @@
-﻿  TeamProJect Monster.cpp
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(22,90): warning C4244: '초기화 중': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(96,15): error C2039: 'Attack': 'Monster'의 멤버가 아닙니다.
-      C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(8,7):
-      'Monster' 선언을 참조하십시오.
-  
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(96,15): error C2182: 'Attack': 이 'void' 사용은 유효하지 않습니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(96,22): error C2065: 'Player': 선언되지 않은 식별자입니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(96,30): error C2065: 'player': 선언되지 않은 식별자입니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(97,1): error C2143: 구문 오류: ';'이(가) '{' 앞에 없습니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(98,2): error C2059: 구문 오류: 'if'
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(99,15): error C2065: 'Player': 선언되지 않은 식별자입니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(99,29): error C2065: 'Player': 선언되지 않은 식별자입니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(99,47): error C2065: 'AttackPower': 선언되지 않은 식별자입니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(100,2): error C2059: 구문 오류: 'if'
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(101,2): error C2143: 구문 오류: ';'이(가) '{' 앞에 없습니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(101,2): error C2447: '{': 함수 헤더가 없습니다. 이전 스타일의 형식 목록입니까?
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(104,2): error C2059: 구문 오류: 'else'
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(105,2): error C2143: 구문 오류: ';'이(가) '{' 앞에 없습니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(105,2): error C2447: '{': 함수 헤더가 없습니다. 이전 스타일의 형식 목록입니까?
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(108,1): error C2059: 구문 오류: '}'
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(108,1): error C2143: 구문 오류: ';'이(가) '}' 앞에 없습니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(111,6): error C2653: 'Player': 클래스 또는 네임스페이스 이름이 아닙니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(112,1): error C2143: 구문 오류: ';'이(가) '{' 앞에 없습니다.
-C:\Users\kevin\OneDrive\문서\GitHub\TextGame18Team\TextGame_18_Team\TeamProJect Monster.cpp(112,1): error C2447: '{': 함수 헤더가 없습니다. 이전 스타일의 형식 목록입니까?
+﻿  GameManager.cpp
+  main.cpp
+  코드를 생성하고 있습니다...
+  TextGame_18_Team.vcxproj -> D:\TextGame18Team\x64\Debug\TextGame_18_Team.exe
