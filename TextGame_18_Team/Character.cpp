@@ -13,7 +13,8 @@ using namespace std;
 // ===== 직업 =====
 enum class Job { Warrior = 1, Mage, Assassin };
 
-struct Derived {
+struct Derived 
+{
     int ATK = 0;       // 공격력 = STR * 1.5
     int SPD = 0;       // 속도   = AGI % 10
     int CRITStat = 0;  // 치명타 = AGI * 2
@@ -21,14 +22,16 @@ struct Derived {
     int CritChance = 0; // 치명타 확률(%) = clamp(AGI*2 + 직업보너스, 0~100)
 };
 
-struct Base {
+struct Base 
+{
     int LV = 1, EXP = 0;
     int STR = 10, AGI = 10, INTL = 10; // 기본
     int HP = 100, MaxHP = 100;
     int MP = 0, MaxMP = 0;
 };
 
-class Character {
+class Character 
+{
 public:
     void chooseJob(Job j) {
         job = j;
@@ -40,16 +43,16 @@ public:
         // 마법사: 마나/지능↑
         // 암살자: 민첩↑, 치명타 확률 보너스
         switch (job) {
-        case Job::Warrior: // STR +40%, AGI +10%, INT -10%, MaxHP +30%
+        case Job::Warrior: // STR +40%, AGI +30%, INT -10%, MaxHP +30%
             applyPercent(base.STR, +40);
-            applyPercent(base.AGI, +10);
+            applyPercent(base.AGI, +30);
             applyPercent(base.INTL, -10);
             hpBonusPercent = 30;
             critBonusFlat = 0;
             break;
-        case Job::Mage:    // INT +50%, AGI +10%, STR -20%, MaxMP +30%
+        case Job::Mage:    // INT +50%, AGI +20%, STR -20%, MaxMP +30%
             applyPercent(base.STR, -20);
-            applyPercent(base.AGI, +10);
+            applyPercent(base.AGI, +20);
             applyPercent(base.INTL, +50);
             mpBonusPercent = 30;
             critBonusFlat = 0;
@@ -189,6 +192,10 @@ public:
         int real = std::max(1, rawAtk - myDef);
         setHP(base.HP - real);
     }
+
+    int  getMP() const { return base.MP; }
+    int  getMaxMP() const { return base.MaxMP; }
+    void setMP(int v) { base.MP = std::max(0, std::min(v, base.MaxMP)); }
 private:
     Job job = Job::Warrior;
     Base base;
@@ -199,14 +206,15 @@ private:
 
     static void applyPercent(int& s, int p) { s = max(1, s + s * p / 100); }
 
-    void levelUp() {
+    void levelUp() 
+    {
         base.LV++;
         cout << "== 레벨업! Lv." << base.LV << " ==\n";
         // 직업별 성장 맛 조금 다르게
         switch (job) {
         case Job::Warrior: base.STR += 3; base.AGI += 1; base.INTL += 1; break;
         case Job::Mage:    base.STR += 1; base.AGI += 1; base.INTL += 3; break;
-        case Job::Assassin:base.STR += 1; base.AGI += 3; base.INTL += 1; break;
+        case Job::Assassin:base.STR += 1; base.AGI += 2; base.INTL += 1; break;
         }
         recomputeDerived();
         base.MaxHP = 100 + base.STR * 10;

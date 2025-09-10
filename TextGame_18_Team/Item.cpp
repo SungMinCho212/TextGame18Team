@@ -54,7 +54,10 @@ int Inventory::GetGold() const
     // 현재 보유 골드 반환
     return gold;
 }
-
+bool Inventory::SpendGold(int g)
+{ 
+    if (g < 0) return false; if (gold < g) return false; gold -= g; return true; 
+}
 /*
      현재 HP/MP가 최대치의 절반 이하일 경우 자동으로 포션을 사용, 포션은 한 번만 사용하고 함수는 종료(return)한다
      사용 후 아이템 개수가 0 이하라면 delete + 벡터에서 제거.
@@ -119,4 +122,35 @@ void Inventory::PrintInventory(void) const
             << " (" << items[i]->GetCount() << ")" << endl;
     }
     cout << "골드: " << gold << endl;
+}
+
+void Inventory::Clear() 
+{
+    for (auto* p : items) delete p;
+    items.clear();
+}
+
+bool Inventory::UseByIndex(int idx, Character& ch) {
+    if (idx < 0 || idx >= (int)items.size()) return false;
+    Item* it = items[idx];
+    if (!it) return false;
+
+    // [CreatedByChatGPT] Character의 HP/MP를 로컬로 꺼내서 Item::Use에 전달
+    int hp = ch.getHP();
+    int mp = ch.getMP();        // (아래 B에서 추가할 getter)
+    const int maxHp = ch.getMaxHP();
+    const int maxMp = ch.getMaxMP(); // (아래 B에서 추가할 getter)
+
+    it->Use(hp, mp, maxHp, maxMp); // void 반환이 정상
+
+    // [CreatedByChatGPT] 변경된 값 반영
+    ch.setHP(hp);
+    ch.setMP(mp);  // (아래 B에서 추가할 setter)
+
+    // 개수 0 이하이면 제거
+    if (it->GetCount() <= 0) {
+        delete it;
+        items.erase(items.begin() + idx);
+    }
+    return true;
 }

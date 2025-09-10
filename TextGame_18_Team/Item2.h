@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Character.cpp"
 using namespace std;
 
 // 아이템 추상 클래스
@@ -46,4 +47,8 @@ public:
 
     // 인벤토리 상태 출력 (포션 이름 + 개수, 골드)
     void PrintInventory(void) const;
+
+    bool SpendGold(int g);
+    void Clear();
+    bool UseByIndex(int idx, Character& ch);
 };
