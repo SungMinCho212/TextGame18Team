@@ -143,7 +143,9 @@ void GameManager::Run()
     while (true) 
     {
         // 3) 전투: 5,10,15… 스테이지는 보스
+        const int stageBefore = stageLevel;
         bool bossFight = (stageLevel >= 5) && (stageLevel % 5 == 0);
+
         bool alive = BattleOnce(bossFight);
         if (!alive) 
         {
@@ -152,6 +154,20 @@ void GameManager::Run()
             break;
         }
 
+        if (!endlessMode && bossFight && stageBefore == 5)
+        {
+            auto choice = PromptAfterStage5Boss();
+            if (choice == PostBossChoice::Quit)
+            {
+                ShowGameEndAndExit();
+                return; 
+            }
+            else 
+            {
+                endlessMode = true;  
+                
+            }
+        }
         // 5) 상점
         VisitShop();
 
@@ -301,7 +317,7 @@ bool GameManager::BattleOnce(bool bossFight)
     // 승리 보상
     int gold = bossFight ? (100 + stageLevel * 5) : (12 + stageLevel * 2);
 
-    int exp = bossFight ? (60 + stageLevel * 5) : (20 + stageLevel * 2);
+    int exp = bossFight ? (60 + stageLevel * 5) : (50 + stageLevel * 2);
 
     g_inv.AddGold(gold);
     g_player.gainExp(exp);
@@ -338,9 +354,9 @@ void GameManager::ShowRewards(int gold, int exp)
 }
 
 // 상점 
-void GameManager::VisitShop() 
+void GameManager::VisitShop()
 {
-    while (true) 
+    while (true)
     {
         ShowFrame(g_player, nullptr, g_inv, stageLevel);
         cout << "\n===== 상점 (Gold: " << g_inv.GetGold() << ") =====\n";
@@ -355,32 +371,64 @@ void GameManager::VisitShop()
 
         int price = 0;
 
-        if (c == 1) 
-        { 
-            toBuy = new HPPotion(1); price = 10; 
+        if (c == 1)
+        {
+            toBuy = new HPPotion(1); price = 10;
         }
 
-        else if (c == 2) 
-        { 
+        else if (c == 2)
+        {
             toBuy = new MPPotion(1); price = 12;
         }
 
         if (!toBuy)
-        { 
-            LogPush("해당 품목이 없습니다."); continue; 
+        {
+            LogPush("해당 품목이 없습니다."); continue;
         }
 
-        if (g_inv.SpendGold(price)) 
+        if (g_inv.SpendGold(price))
         {
             g_inv.AddItem(toBuy);
             LogPush(std::string("구매 완료: ") + toBuy->GetName());
         }
-        else 
+        else
         {
             LogPush("골드가 부족합니다.");
             delete toBuy; // 실패 시 메모리 정리
         }
-        
+
     }
-    
 }
+    GameManager::PostBossChoice GameManager::PromptAfterStage5Boss()
+    {
+        while (true)
+        {
+            ClearScreen();
+            cout << "===== 선택지 =====\n";
+            cout << "1) 무한 모드로 계속 싸운다 (죽을 때까지)\n";
+            cout << "2) 게임을 종료한다\n";
+            cout << "선택: ";
+
+            int sel;
+            if (!(cin >> sel)) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                continue;
+            }
+
+            if (sel == 1) return PostBossChoice::Endless;
+            if (sel == 2) return PostBossChoice::Quit;
+
+            // 잘못 입력 시 다시
+        }
+    }
+    void GameManager::ShowGameEndAndExit()
+    {
+        ClearScreen();
+        cout << "====================\n";
+        cout << "      게임 끝       \n";
+        cout << "====================\n";
+        // Enter 입력을 한 번 더 받으면 일반적으로 콘솔이 종료(더블클릭 실행 기준)
+        WaitEnter("엔터를 누르면 종료됩니다...");
+        // 여기서 단순히 Run()에서 return하면 main 종료와 함께 창 닫힘
+    }

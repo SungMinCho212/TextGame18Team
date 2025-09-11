@@ -6,6 +6,7 @@ public:
 
 private:
     int stageLevel = 1; // 스테이지는 GameManager에서만 관리
+    bool endlessMode = false;
 
     void CreateCharacter();
     void ShowStatus();
@@ -14,4 +15,7 @@ private:
     void VisitShop();
 
     int  RandInt(int a, int b) const;
+    enum class PostBossChoice { Endless, Quit };
+    PostBossChoice PromptAfterStage5Boss();
+    void ShowGameEndAndExit();
 };
