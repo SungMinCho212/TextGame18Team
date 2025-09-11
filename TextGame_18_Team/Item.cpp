@@ -135,19 +135,19 @@ bool Inventory::UseByIndex(int idx, Character& ch) {
     Item* it = items[idx];
     if (!it) return false;
 
-    // [CreatedByChatGPT] Character의 HP/MP를 로컬로 꺼내서 Item::Use에 전달
+   
     int hp = ch.getHP();
-    int mp = ch.getMP();        // (아래 B에서 추가할 getter)
+    int mp = ch.getMP();        
     const int maxHp = ch.getMaxHP();
-    const int maxMp = ch.getMaxMP(); // (아래 B에서 추가할 getter)
+    const int maxMp = ch.getMaxMP(); 
 
-    it->Use(hp, mp, maxHp, maxMp); // void 반환이 정상
+    it->Use(hp, mp, maxHp, maxMp); 
 
-    // [CreatedByChatGPT] 변경된 값 반영
+    
     ch.setHP(hp);
-    ch.setMP(mp);  // (아래 B에서 추가할 setter)
+    ch.setMP(mp);  
 
-    // 개수 0 이하이면 제거
+    
     if (it->GetCount() <= 0) {
         delete it;
         items.erase(items.begin() + idx);

@@ -236,7 +236,8 @@ bool GameManager::BattleOnce(bool bossFight)
             ShowFrame(g_player, mon.get(), g_inv, stageLevel);
             g_inv.PrintInventory();
             std::cout << "사용할 아이템 번호(-1: 취소, 1부터 시작): ";
-            int idx; std::cin >> idx;
+            int idx;
+            std::cin >> idx;
             if (idx < 0) return;
             idx -= 1;
             if (!g_inv.UseByIndex(idx, g_player)) 
